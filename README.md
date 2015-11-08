@@ -9,27 +9,27 @@ This is for you, if you
 To understand why there is a method call `map`, we need to first treat `array` as a context.
 Take `[1, 2, 3]` as an example, imagine `[` and `]` as a box wrapping around `1, 2, 3`:
 ```
-+---------+
-|         |
-| 1, 2, 3 | .map fn => fn 1, fn 2, fn 3
-|         |
-+---------+
++---------+             +------------------+
+|         |             |                  |
+| 1, 2, 3 | .map(fn) => | fn 1, fn 2, fn 3 |
+|         |             |                  |
++---------+             +------------------+
 ```
-What `[1, 2, 3].map(element => fn)` does is unpack this box and take `1, 2, 3` out then calls the function `fn` on each number.
+What `[1, 2, 3].map(element => fn)` does is unpack this box and take `1, 2, 3` out then calls the function `fn` on each number then put them back into another box.
 
 In other words, instead of saying `array` has a method `map`, we say:
-A function (`fn`) outside the context of an array can operate on the value (`1, 2, 3`) inside an `array`, so that the fact the value (`1, 2, 3`) coming from an array is irrelevant to `fn`.
+A function (`fn`) outside the context of an array can operate on the value (`1, 2, 3`) inside an `array`, so that the fact that the value (`1, 2, 3`) coming from an array is irrelevant to `fn`.
 
 ## Promise as context
-From the seemingly trivial example above, I'm sure if you noticed the subtle difference between calling `array` a context and calling `array` an `array`. This change of sematics is a form of abstraction. It's OK if you don't get that. To understand abstraction, more practical example needs to be examed. Let's look at `promise` expressed below:
+From the seemingly trivial example above, I'm not sure if you noticed the subtle difference between calling `array` a context and calling `array` an `array`. This change of sematics is a form of abstraction. It's OK if you don't get that. To understand abstraction, more practical example needs to be examed. Let's look at `promise` expressed below:
 ```
-+---------+
-|         |
-|    1    | .then fn => fn 1
-|         |
-+---------+
++---------+              +-------+
+|         |              |       |
+|    1    | .then(fn) => | fn(1) |
+|         |              |       |
++---------+              +-------+
 ```
-Now the box represents a value in the future (`promise`). It provides a context around the value `1`. When `then` is called on the context, `1` will be unpacked and given to `fn`.
+Now the box represents a value in the future (`promise`). It provides a context around the value `1`. When `then` is called on the context, `1` will be unpacked and given to `fn`. Then what's coming out of `fn` will be wrapped into a context(`promise`) again.
 
 In other words, instread of saying `promise` has a method `then`, we say:
 A function (`fn`) outside the context of a promise can operate on the value (`1`) inside a promise, so that the fact the value (`1`) coming in from a future point of time is irrelevant to `fn`. The benefit of `then` method is clearer to us than `map` on the array since now asynchronous behavior is abstracted away by treating it as a context.
