@@ -128,4 +128,4 @@ A monad must satisfy three laws:
 given f and g both return a value inside some context that unit produce.
 ```
 
-Head spinning? Let's take a break and find out why monads have these three laws.
+Head spinning? Let's take a break and find out why monads have these three laws in my next post.
