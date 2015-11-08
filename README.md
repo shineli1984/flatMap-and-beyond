@@ -112,6 +112,7 @@ What we just went through is a notation called monad.
 
 A monad must satisfy three laws:
 
+```
 - unit(a).flatMap(f) === f(a) 
     |        |            |
     left    right         cancels each other.  This is called left identity.
@@ -125,5 +126,6 @@ A monad must satisfy three laws:
                    value1     value2                        value1       value2. This is called associativity.
 
 given f and g both return a value inside some context that unit produce.
+```
 
 Head spinning? Let's take a break and find out why monads have these three laws.
